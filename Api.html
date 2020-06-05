@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app="">
+
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js">
+    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width">
+    <script src="Api.py"></script>
+    <link rel="stylesheet" href="Api.css">
+
+</head>
+
+<body>
+    <div class="container-fluid" ng-controller=itemsController>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <p class="panel-title total-amount">Juste: <span>{{total() | currency: $}}</span></p>
+                <p class="panel-title item-display">Prix: <span ng-hide='product==undefined'>{{product.name }}</span></p>
+            </div>
+
+            <div class="panel-body">
+                <form name="cashRegister" class="form-horizontal">
+                    <!-- Product Selector -->
+                    <div class="form-group">
+                        <div class="col-md-4 product-inputs-left ui-widget">
+                            <input class="form-control input-lg" list="product_names" type="text" ng-model="inputed_product_name" ng-change="select_product()">
+                            <datalist id="product_names">
+                   <option ng-repeat="a in product_list" value="{{a.name}}">
+                 </datalist>
+                            <span class="help-block help-block-label">Nom du produit</span>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4 product-inputs-left ui-widget">
+                                <input class="form-control input-lg" list="" type="number" ng-model="product.price" ng-change="select_product()">
+
+                                <span class="help-block help-block-label">juste prix en euros</span>
+                            </div>
+
+                            <div class="col-md-3 product-inputs-right">
+                                <button class="btn btn-lg btn-primary btn-block" id="btnAddProduct" ng-click=add_to_cart()>Test</button>
+                                <span class="help-block help-block-label">Tester le juste prix du produit</span>
+                            </div>
+                        </div>
+                </form>
+
+                <!-- Cart contents -->
+                <span class="help-block help-block-label">Resultats des rechercher.</span>
+                <div class="well" id="cartDisplay">
+                    <table class="table table-condensed table-striped table-responsive table-borderless" ng-model=discount_row>
+                        <tr>
+                            <th>{{discount_row[discount_row.length-1].name}}</th>
+                            <th>{{discount_row[discount_row.length-1].discount}}</th>
+                        </tr>
+                        <tr ng-repeat="x in cart">
+                            <td>{{x.name}}</td>
+                            <td>{{ x.price | currency:$}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+
+
+
+
+</body>
+<script src="Api.js"></script>
+
+</html>
